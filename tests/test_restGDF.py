@@ -1,8 +1,8 @@
 import pytest
-from src.restGDF import Layer
+from ..src.restGDF import Layer
 import geopandas as gpd
 from unittest.mock import patch
-from src.utils import save_gdf, get_layer_data
+from ..src.utils import save_gdf, get_layer_data
 
 # Mock MapService for testing
 class MockMapService:
