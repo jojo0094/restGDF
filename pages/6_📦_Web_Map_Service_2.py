@@ -70,6 +70,7 @@ with row1_col2:
 
             if layers is not None:
                 for layer in layers:
+                    layer_to_add = None
                     m.add_wms_layer(
                         url, layers=layer, name=layer, attribution=" ", transparent=True
                     )

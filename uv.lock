@@ -222,6 +222,17 @@ wheels = [
 ]
 
 [[package]]
+name = "bmi-arcgis-restapi"
+version = "2.4.9"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "munch" },
+    { name = "requests" },
+    { name = "urllib3" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6f/45/ca69388532b02cb7e6ab259ab324a5c02ec00ca04fd6162c17ec53456d92/bmi_arcgis_restapi-2.4.9.tar.gz", hash = "sha256:429ec76a6a73231831c9206f47fe804020857604235eb603c17d5b6ec2520052", size = 747899 }
+
+[[package]]
 name = "bqplot"
 version = "0.12.43"
 source = { registry = "https://pypi.org/simple" }
@@ -1472,6 +1483,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/51/78/65922308c4248e0eb08ebcbe67c95d48615cc6f27854b6f2e57143e9178f/more-itertools-10.5.0.tar.gz", hash = "sha256:5482bfef7849c25dc3c6dd53a6173ae4795da2a41a80faea6700d9f5846c5da6", size = 121020 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/48/7e/3a64597054a70f7c86eb0a7d4fc315b8c1ab932f64883a297bdffeb5f967/more_itertools-10.5.0-py3-none-any.whl", hash = "sha256:037b0d3203ce90cca8ab1defbbdac29d5f993fc20131f3664dc8d6acfa872aef", size = 60952 },
+]
+
+[[package]]
+name = "munch"
+version = "4.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/2b/45098135b5f9f13221820d90f9e0516e11a2a0f55012c13b081d202b782a/munch-4.0.0.tar.gz", hash = "sha256:542cb151461263216a4e37c3fd9afc425feeaf38aaa3025cd2a981fadb422235", size = 19089 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/56/b3/7c69b37f03260a061883bec0e7b05be7117c1b1c85f5212c72c8c2bc3c8c/munch-4.0.0-py2.py3-none-any.whl", hash = "sha256:71033c45db9fb677a0b7eb517a4ce70ae09258490e419b0e7f00d1e386ecb1b4", size = 9950 },
 ]
 
 [[package]]
@@ -2796,6 +2816,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "arcgis" },
+    { name = "bmi-arcgis-restapi" },
     { name = "folium" },
     { name = "geopandas" },
     { name = "ipykernel" },
@@ -2809,6 +2830,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "arcgis", specifier = ">=2.3.0.2" },
+    { name = "bmi-arcgis-restapi", specifier = ">=2.4.9" },
     { name = "folium", specifier = ">=0.18.0" },
     { name = "geopandas", specifier = ">=1.0.1" },
     { name = "ipykernel", specifier = ">=6.29.5" },

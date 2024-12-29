@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "arcgis>=2.3.0.2",
+    "bmi-arcgis-restapi>=2.4.9",
     "folium>=0.18.0",
     "geopandas>=1.0.1",
     "ipykernel>=6.29.5",
