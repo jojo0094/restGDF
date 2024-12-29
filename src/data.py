@@ -20,4 +20,8 @@ for layer in layers:
     # layer_to_add = get_layer_data(url, layer)
     layer_to_add = get_layer_data(watermap_sever, layer)
 
+    if layer_to_add is not None:
+        layer_to_add.to_file(f'{layer}.gpkg', driver="GPKG")
+        
+
 

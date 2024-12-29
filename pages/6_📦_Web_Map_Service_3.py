@@ -5,6 +5,56 @@ import requests
 import geopandas as gpd
 import restapi
 
+def get_layer_data(mapserver, layer_name, result_limit=2000):
+    """
+    Fetches all features from a mapserver layer, handling potential 2000-row limits.
+
+    Args:
+        mapserver: The MapServer object.
+        layer_name: The name of the layer to query.
+        result_limit: The maximum number of features to fetch per request (default: 2000).
+
+    Returns:
+        A GeoDataFrame containing all features from the layer.
+    """
+
+    layer = mapserver.layer(layer_name)
+
+    # Determine the total number of features (if available)
+    try:
+        total_features = layer.query(where="1=1", returnCountOnly=True)["count"]
+    except KeyError:
+        total_features = None
+
+    all_features = []
+    offset = 0
+
+    while True:
+        # Construct the query with result limit and offset
+        query_result = layer.query(
+            where="1=1",
+            outFields="*",
+            returnGeometry=True,
+            f="geojson",
+            resultOffset=offset,
+            resultRecordCount=result_limit
+        )
+
+        # Append features to the list
+        all_features.extend(query_result["features"])
+
+        # Check if all features have been retrieved
+        if total_features is not None:
+            if offset >= total_features:
+                break
+        else:
+            # If total_features is unknown, assume all features have been retrieved
+            if len(query_result["features"]) < result_limit:
+                break
+
+        offset += result_limit
+
+    return gpd.GeoDataFrame.from_features(all_features, crs="EPSG:4326")
 import os
 os.environ['RESTAPI_USE_ARCPY'] = 'FALSE'
 os.environ['RESTAPI_VERIFY_CERT'] = 'FALSE'
@@ -43,14 +93,16 @@ some WMS URLs if needed.
 )
 
 row1_col1, row1_col2 = st.columns([3, 1])
+#add h2 header
+row1_col1.header("Map")
 width = None
 height = 600
 layers = None
 
 def get_layer_data(mapserver, layer_name):
     layer = mapserver.layer(layer_name)
-    return gpd.GeoDataFrame.from_features(layer.query(where="1=1", outFields="*", returnGeometry=True, f="geojson")["features"], crs="EPSG:4326")
-
+    return gpd.GeoDataFrame.from_features(layer.query(where="1=1",exceed_limit=True, outFields="*", returnGeometry=True, f="geojson")["features"], crs="EPSG:4326")
+#
 # def get_layer_data(base_url, layer_name):
 #     # Define the Map Service URL and the layer endpoint
 #     layer_url = f"{base_url}/layers"  # Append layer endpoint
@@ -128,12 +180,19 @@ with row1_col2:
             # m = folium.Map(location=[-37.78374, 535.286865], zoom_start=12)
 
             if layers is not None:
+                layer_row_count = {}
                 for layer in layers:
                     layer_to_add = None
 
 
                     # layer_to_add = get_layer_data(url, layer)
                     layer_to_add = get_layer_data(watermap_sever, layer)
+                    # layer_to_add = layer_to_add[:1000]
+                    layer_row_count[layer] = len(layer_to_add)
+                    layer_chosen = watermap_sever.layer(layer)
+                    total_features = layer_chosen.query(where="1=1", returnCountOnly=True)["count"]
+                    # layer_row_count[layer] = total_features
+                    #add card with layer name and count
                     #change to web crs
                     layer_to_add = layer_to_add.to_crs("EPSG:4326")
 
@@ -146,6 +205,10 @@ with row1_col2:
             # if add_legend and legend_text:
             #     legend_dict = ast.literal_eval(legend_text)
             #     m.add_legend(legend_dict=legend_dict)
+                cols = st.columns(len(layer_row_count))
+                for i, (layer_name,row_count) in enumerate(layer_row_count.items()):
+                    with cols[i]:
+                        st.write(f"Layer: {layer_name} - Count: {row_count}")
 
             
             m.add_gdf(layer_to_add, layer_name=layer)
