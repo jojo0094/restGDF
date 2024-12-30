@@ -21,11 +21,15 @@ class Layer:
     def get_gdf(self) -> Union[gpd.GeoDataFrame, None]:
         return utils.get_layer_data(mapserver=self.mapserver, layer_name=self.layer_name)
 
+    def get_gdf_by_polygon(self, polygon: str) -> Union[gpd.GeoDataFrame, None]:
+        return utils.get_layer_data_by_polygon(mapserver=self.mapserver, layer_name=self.layer_name, polygon=polygon)
+
     @staticmethod
     def save_gdf(gdf: gpd.GeoDataFrame, layer_name: str, 
                   config: Dict = {
                   "folder": ".",
                   "format": "gpkg",
-                  }) -> None:
-        utils.save_gdf(gdf, layer_name, config)
+                  }) -> None: # kwargs** will be suited? 
+        utils.save_gdf(gdf, layer_name, config) # need to know what utils.save_gdf does
+
 
