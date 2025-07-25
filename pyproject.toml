@@ -6,6 +6,21 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "bmi-arcgis-restapi>=2.4.9",
+    "cadquery>=2.5.2",
+    "contextily>=1.6.2",
+    "ezdxf>=1.4.2",
+    "folium>=0.20.0",
     "geopandas>=1.0.1",
+    "ipykernel>=6.29.5",
+    "ipython>=9.4.0",
+    "leafmap>=0.48.6",
+    "mapclassify>=2.10.0",
+    "matplotlib>=3.10.3",
+    "pyautocad>=0.2.0",
     "pytest>=8.3.4",
+    "setuptools>=80.9.0",
+    "stormcatchments>=0.4.1",
+    "whitebox>=2.3.6",
+    "ydata-profiling>=4.12.2",
 ]
+

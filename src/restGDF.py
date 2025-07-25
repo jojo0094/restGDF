@@ -24,6 +24,26 @@ class Layer:
     def get_gdf_by_polygon(self, polygon: str) -> Union[gpd.GeoDataFrame, None]:
         return utils.get_layer_data_by_polygon(mapserver=self.mapserver, layer_name=self.layer_name, polygon=polygon)
 
+    def get_all_features_paginated(self, batch_size=1000):
+        offset = 0
+        all_features = []
+        while True:
+            result = self.layer.query(
+                where="1=1",
+                outFields="*",
+                returnGeometry=True,
+                resultOffset=offset,
+                resultRecordCount=batch_size,
+                f="geojson"
+            )
+            features = result.get("features", [])
+            all_features.extend(features)
+            if len(features) < batch_size:
+                break  # No more features
+            offset += batch_size
+
+        return gpd.GeoDataFrame.from_features(all_features, crs="EPSG:4326")
+
     @staticmethod
     def save_gdf(gdf: gpd.GeoDataFrame, layer_name: str, 
                   config: Dict = {
