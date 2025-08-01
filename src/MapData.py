@@ -96,6 +96,9 @@ class PointLayer(MapLayer):
         data (gpd.GeoDataFrame): The GeoDataFrame containing the point data.
         name (str): The name of the point layer.
     """
+    data: gpd.GeoDataFrame = field(default_factory=gpd.GeoDataFrame)
+    name: str = ""
+
     def prep_crs(self, crs: str = "EPSG:2193") -> None:
         """        Set the coordinate reference system for the point layer.
         Args:
