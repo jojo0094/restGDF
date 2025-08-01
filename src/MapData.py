@@ -153,3 +153,9 @@ class MapDataStore:
             return layer.data
         else:
             raise KeyError(f"Layer '{name}' not found in the data store.")
+
+    def list_layers(self) -> List[str]:
+        """
+        List all layer names in the data store.
+        """
+        return list(self.layers.keys())
