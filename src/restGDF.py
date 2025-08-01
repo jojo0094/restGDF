@@ -48,6 +48,7 @@ class Layer:
     Methods:
     
     """
+    #TODO: feature_layer has getCRS or WKT but it is not making sense at the moment. therefore user need to fine tune the CRS.
     url: Optional[str] = None
     feature_layer: Optional[Union[FeatureLayer, MapServiceLayer]] = None
     
