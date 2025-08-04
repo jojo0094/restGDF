@@ -1,0 +1,41 @@
+import json
+import os
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Optional, Dict, Any, Union, List
+
+import geopandas as gpd
+from src.restGDF import Layer #NOTE: currently at layer level only.
+
+
+#dataclass
+class BulkDownloader:
+
+    config_path: Path = Path("config.json")
+    output_folder: Path = Path("output")
+    query_polygon: Optional[Path] = None
+    reporting: bool = False
+
+    layers: Dict[str, Layer] = field(init=False, default_factory=dict)
+    dataframes: Dict[str, gpd.GeoDataFrame] = field(init=False, default_factory=dict)
+
+    def __post_init__(self):
+       self.output_folder.mkdir(parents=True, exist_ok=True)
+        self.load_config()
+        if self.query_polygon:
+            self.query_polygon = self.query_polygon.resolve()
+            if not self.query_polygon.exists():
+                raise FileNotFoundError(f"Query polygon file does not exist: {self.query_polygon}")
+
+    def load_config(self):
+        if self.config_path.exists():
+            with open(self.config_path, 'r') as f:
+                config = json.load(f)
+                self.layers = {name: Layer(url) for name, url in config.get("layers", {}).items()}
+                self.query_polygon = Path(config.get("query_polygon", "")) if config.get("query_polygon") else None
+                self.reporting = config.get("reporting", False)
+        else:
+            raise FileNotFoundError(f"Configuration file not found: {self.config_path}")
+    
+
+

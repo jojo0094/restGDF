@@ -1,0 +1,7 @@
+{
+  "reporting": true,
+  "query_polygon": "clip_polygon.shp",
+  "layers": [
+    "https://services6.arcgis.com/EU3vB12T67eDdisL/ArcGIS/rest/services/WaterLine/FeatureServer/488",
+  ]
+}

@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
   "venvPath": "/workspaces/WSNETBuilder",
+=======
+  "venvPath": "/workspaces/restGDF",
+>>>>>>> 81afde2a84c137348ce9bed2a1b78d110ad4043c
   "venv": ".venv"
 }
