@@ -1,7 +1,23 @@
 import streamlit as st
 import leafmap.foliumap as leafmap
-
+from restGDF.src.restGDF import Layer
+from restGDF.src.MapData import MapDataStore, MapLayer, PointLayer
 st.set_page_config(layout="wide")
+
+ws_point_url = "https://services6.arcgis.com/EU3vB12T67eDdisL/ArcGIS/rest/services/WaterPoint/FeatureServer/27"
+ws_point_layer = Layer(url=ws_point_url)
+
+ws_point_maplayer = PointLayer(
+        data=ws_point_layer.get_gdf(),
+        name=ws_point_layer.feature_layer.get('name', 'Water Point Layer')
+)
+data_store = MapDataStore(
+    layers={
+        ws_point_maplayer.name: ws_point_maplayer
+    }
+)
+
+st.session_state["data_store"] = data_store
 
 # Customize the sidebar
 markdown = """

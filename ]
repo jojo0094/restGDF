@@ -1,0 +1,24 @@
+import numpy as np
+from scipy.stats import lognorm
+import networkx as nx
+import geopandas as gpd
+import matplotlib.pylab as plt
+import warnings
+import wntr
+
+# Create a WaterNetworkModel from an EPANET INP file
+wn = wntr.network.WaterNetworkModel('data/test1.inp')
+wn.nodes
+print(wn.nodes)
+
+print(wn.options)
+
+
+sim = wntr.sim.EpanetSimulator(wn)
+results_EPANET = sim.run_sim()
+print(results_EPANET.node['demand'].head())
+#flow
+print(results_EPANET.link['flowrate'].head())
+
+#check demand form node
+print(wn.nodes['J1'].demand_timeseries_list())

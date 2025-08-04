@@ -1,0 +1,60 @@
+;MADE BY EPANET-JS [954ff60c]
+[JUNCTIONS]
+;Id	Elevation
+J1	72.4
+
+[RESERVOIRS]
+;Id	Head	Pattern
+R1	140.5
+
+[TANKS]
+;Id	Elevation	InitLevel	MinLevel	MaxLevel	Diameter	MinVol
+
+[PIPES]
+;Id	Start	End	Length	Diameter	Roughness	MinorLoss	Status
+P1	R1	J1	251.52	300	130	0	Open
+
+[PUMPS]
+;Id	Start	End	Properties
+
+[VALVES]
+;Id	Start	End	Diameter	Setting	MinorLoss
+
+[DEMANDS]
+;Id	Demand	Pattern	Category
+J1	20
+
+[STATUS]
+;Id	Status
+
+[CURVES]
+;Id	X	Y
+
+[TIMES]
+Duration	0
+
+[REPORT]
+Status	FULL
+Summary	No
+Page	0
+
+[OPTIONS]
+Quality	NONE
+Unbalanced	CONTINUE 10
+Accuracy	0.001
+Units	LPS
+Headloss	H-W
+Demand Multiplier	1
+
+[BACKDROP]
+Units	DEGREES
+
+[COORDINATES]
+;Node	X-coord	Y-coord
+R1	175.7184604	-37.5388889
+J1	175.7156945	-37.5394423
+
+[VERTICES]
+;link	X-coord	Y-coord
+
+[END]
